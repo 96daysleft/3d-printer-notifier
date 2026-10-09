@@ -1,0 +1,54 @@
+# 3D Printer Notifier configuration.
+# Keys can be camelCase or snake_case. Any value can use ${ENV_VAR} or
+# ${ENV_VAR:-default} so secrets can come from the environment.
+
+logLevel: INFO              # DEBUG, INFO, WARNING, ERROR
+logFormat: console          # console or json
+pollIntervalMinutes: 5      # how often buffered alerts are sent to Discord
+maxAlertsPerPoll: 5         # detailed alerts per Discord message (1-9)
+healthPort: 8080            # GET /healthz; 0 disables
+
+discord:
+  webhookUrl: ${DISCORD_WEBHOOK_URL}   # default for printers without their own
+  username: 3D Printer Notifier        # sender name for service-level messages
+
+# Defaults for every printer; each printer can override any of these.
+notify:
+  onConnect: true
+  onPrintStart: true
+  onPrintFinish: true
+  onError: true
+  onProgress: true
+  progressMilestones: [25, 50, 75]
+  withSnapshot: true
+
+printers:
+  # Snapmaker U1 (Moonraker). Port defaults to 80.
+  - name: U1
+    type: u1
+    host: 192.168.1.50
+    # apiKey: ${U1_API_KEY}           # only if the printer requires it
+    # camera:
+    #   snapshotUrl: http://192.168.1.50/server/files/camera/monitor.jpg   # default
+
+  # A second U1, posting to its own channel with fewer notifications
+  - name: U1 Garage
+    type: u1
+    host: 192.168.1.51
+    discordWebhookUrl: ${GARAGE_WEBHOOK_URL:-}
+    notify:
+      onProgress: false
+
+  # Elegoo Centauri Carbon (SDCP). Port defaults to 3030.
+  - name: Centauri
+    type: cc1
+    host: 192.168.1.60
+    # mainboardId: 607315d30105041800009c0000000000   # discovered automatically if omitted
+    # camera:
+    #   snapshotUrl: http://192.168.1.60:3031/video   # default
+
+  # Keep a printer in the file without monitoring it
+  - name: Centauri 2
+    type: cc1
+    host: 192.168.1.61
+    enabled: false

@@ -1,0 +1,97 @@
+image:
+  repository: ghcr.io/96daysleft/3d-printer-notifier
+  # Defaults to the chart's appVersion
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# --- Application config ------------------------------------------------------
+# Everything below (down to `printers`) is rendered into config.yaml and
+# stored in a Secret, since it contains webhook URLs and API keys.
+# Any string may reference env vars as ${VAR} or ${VAR:-default}; combine with
+# extraEnv / extraEnvFrom to keep secrets out of values entirely.
+
+logLevel: INFO            # DEBUG, INFO, WARNING, ERROR
+logFormat: console        # console or json
+pollIntervalMinutes: 5    # how often buffered alerts are sent to Discord
+maxAlertsPerPoll: 5       # detailed alerts per Discord message (1-9)
+healthPort: 8080          # liveness endpoint (/healthz); 0 disables it and the probe
+
+discord:
+  # Default webhook for printers that don't set discordWebhookUrl
+  webhookUrl: ""
+  username: 3D Printer Notifier
+
+# Defaults for every printer; a printer's own `notify:` overrides individual keys
+notify:
+  onConnect: true
+  onPrintStart: true
+  onPrintFinish: true
+  onError: true
+  onProgress: true
+  progressMilestones: [25, 50, 75]
+  withSnapshot: true
+
+# One entry per printer. `type` selects the printer integration:
+#   u1   Snapmaker U1 (Moonraker)       port default 80,   optional apiKey
+#   cc1  Elegoo Centauri Carbon (SDCP)  port default 3030, optional mainboardId
+# Common keys: name (unique, used as the Discord sender name), type, host,
+#   port, enabled, discordWebhookUrl, camera.snapshotUrl, notify.*
+printers: []
+#  - name: U1
+#    type: u1
+#    host: 192.168.1.50
+#  - name: U1 Garage
+#    type: u1
+#    host: 192.168.1.51
+#    apiKey: ${U1_GARAGE_API_KEY}
+#    discordWebhookUrl: ${GARAGE_WEBHOOK_URL}
+#    notify:
+#      onProgress: false
+#  - name: Centauri
+#    type: cc1
+#    host: 192.168.1.60
+#    mainboardId: ""          # auto-discovered over UDP when empty
+#    camera:
+#      snapshotUrl: http://192.168.1.60:3031/video
+
+# Use a pre-existing Secret containing a complete config.yaml (key: config.yaml)
+# instead of rendering one from the values above.
+existingSecret: ""
+
+# Extra environment for ${VAR} references in the config
+extraEnv: []
+#  - name: DISCORD_WEBHOOK_URL
+#    valueFrom:
+#      secretKeyRef: {name: printer-notifier-discord, key: webhook-url}
+extraEnvFrom: []
+#  - secretRef:
+#      name: printer-notifier-secrets
+
+# --- Pod settings ------------------------------------------------------------
+# Always a single replica: more would send duplicate notifications.
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+  runAsGroup: 1001
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 64Mi
+  limits:
+    memory: 128Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

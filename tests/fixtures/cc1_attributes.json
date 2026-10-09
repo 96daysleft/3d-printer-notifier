@@ -1,0 +1,36 @@
+{
+  "Attributes": {
+    "Name": "Centauri Carbon",
+    "MachineName": "Centauri Carbon",
+    "BrandName": "ELEGOO",
+    "ProtocolVersion": "V3.0.0",
+    "FirmwareVersion": "V0.3.0-o",
+    "XYZsize": "218.88x128.88x220",
+    "MainboardIP": "192.168.45.245",
+    "MainboardMAC": "e8:5c:5f:77:41:84",
+    "MainboardID": "607315d30105041800009c0000000000",
+    "SDCPStatus": 0,
+    "MaximumCloudSDCPSercicesAllowed": 0,
+    "NumberOfCloudSDCPServicesConnected": 0,
+    "NumberOfVideoStreamConnected": 3,
+    "MaximumVideoStreamAllowed": 4,
+    "NetworkStatus": "wlan",
+    "UsbDiskStatus": 0,
+    "Capabilities": ["FILE_TRANSFER", "PRINT_CONTROL", "VIDEO_STREAM"],
+    "SupportFileType": ["gcode"],
+    "DevicesStatus": {
+      "SgStatus": 1,
+      "ZMotorStatus": 1,
+      "XMotorStatus": 1,
+      "YMotorStatus": 1
+    },
+    "CameraStatus": 1,
+    "RemainingMemory": 5105299456,
+    "TLPNoCapPos": 0,
+    "TLPStartCapPos": 0,
+    "TLPInterLayers": 0
+  },
+  "MainboardID": "607315d30105041800009c0000000000",
+  "TimeStamp": 1772316065,
+  "Topic": "sdcp/attributes/607315d30105041800009c0000000000"
+}

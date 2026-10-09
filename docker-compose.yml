@@ -1,0 +1,18 @@
+services:
+  3d-printer-notifier:
+    build: .
+    container_name: 3d-printer-notifier
+    restart: unless-stopped
+    # Values referenced as ${VAR} in config.yaml (e.g. DISCORD_WEBHOOK_URL)
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./config.yaml:/config/config.yaml:ro
+    ports:
+      - "8080:8080"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

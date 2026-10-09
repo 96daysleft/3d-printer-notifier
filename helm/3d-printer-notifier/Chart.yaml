@@ -1,0 +1,7 @@
+apiVersion: v2
+name: 3d-printer-notifier
+description: Discord notifications for 3D printers (Snapmaker U1, Elegoo Centauri Carbon, ...)
+type: application
+# version/appVersion are set from the git tag by the release workflow
+version: 0.1.0
+appVersion: "0.1.0"

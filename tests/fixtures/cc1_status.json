@@ -1,0 +1,33 @@
+{
+  "Status": {
+    "CurrentStatus": [0],
+    "TimeLapseStatus": 0,
+    "PlatFormType": 0,
+    "TempOfHotbed": 31.97969149442134,
+    "TempOfNozzle": 33.25938063020019,
+    "TempOfBox": 29.09011694809794,
+    "TempTargetHotbed": 0,
+    "TempTargetNozzle": 0,
+    "TempTargetBox": 0,
+    "CurrenCoord": "202.00,264.50,22.57",
+    "CurrentFanSpeed": { "ModelFan": 0, "AuxiliaryFan": 0, "BoxFan": 0 },
+    "ZOffset": 1e-14,
+    "LightStatus": { "SecondLight": 0, "RgbLight": [0, 0, 0] },
+    "PrintInfo": {
+      "Status": 0,
+      "CurrentLayer": 11,
+      "TotalLayer": 70,
+      "54 6F 74 61 6C 45 78 74 72 75 73 69 6F 6E 00": 1135.662137000174,
+      "43 75 72 72 65 6E 74 45 78 74 72 75 73 69 6F 6E 00": 0,
+      "CurrentTicks": 418.7713034919998,
+      "TotalTicks": 1737,
+      "Filename": "",
+      "TaskId": "",
+      "PrintSpeedPct": 100,
+      "Progress": 0
+    }
+  },
+  "MainboardID": "607315d30105041800009c0000000000",
+  "TimeStamp": 1772302614,
+  "Topic": "sdcp/status/607315d30105041800009c0000000000"
+}

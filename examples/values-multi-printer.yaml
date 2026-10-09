@@ -1,0 +1,35 @@
+# Two U1s and two Centauri Carbons. The default webhook comes from a
+# pre-created Secret (e.g. synced from OpenBao) instead of living in values.
+#
+#   kubectl create secret generic printer-notifier-secrets \
+#     --from-literal=DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/... \
+#     --from-literal=GARAGE_WEBHOOK_URL=https://discord.com/api/webhooks/...
+#
+#   helm install printers oci://ghcr.io/96daysleft/charts/3d-printer-notifier \
+#     -f examples/values-multi-printer.yaml
+
+discord:
+  webhookUrl: ${DISCORD_WEBHOOK_URL}
+
+extraEnvFrom:
+  - secretRef:
+      name: printer-notifier-secrets
+
+printers:
+  - name: U1 Left
+    type: u1
+    host: 192.168.1.50
+  - name: U1 Right
+    type: u1
+    host: 192.168.1.51
+  - name: Centauri
+    type: cc1
+    host: 192.168.1.60
+    mainboardId: 607315d30105041800009c0000000000
+  - name: Centauri Garage
+    type: cc1
+    host: 192.168.1.61
+    discordWebhookUrl: ${GARAGE_WEBHOOK_URL}
+    notify:
+      onProgress: false
+      withSnapshot: false
